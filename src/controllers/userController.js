@@ -12,6 +12,10 @@ module.exports = {
             return texto.replace(/\D/g, '');
         }
 
+        const senha = data.senha;
+        if(senha.length < 8){
+            res.status(500).json({status: false, message: "Use uma senha com pelo menos 8 caracteres :D"});
+        }
         const cpf = apenasNumeros(data.cpf)
 
         UserValidator.create.validate({...data, cpf}).then(async function () {

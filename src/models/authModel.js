@@ -5,26 +5,29 @@ const { v4: uuidv4 } = require('uuid');
 
 class Auth extends Default{
 
-    async authenticate({email, password}){
+    async authenticate({email, senha}){
         try{
-            const dbemail = await knex('users').where("email", email.toLowerCase()).select('id', 'nome', 'senha', 'ativo');
-            if(dbemail[0].wrongpassword > 5){
+            const dbemail = await knex('usuario').where("email", email.toLowerCase()).select('id', 'nome', 'senha', 'ativo');
+          /*   if(dbemail[0].wrongpassword > 5){
                 return {status: false, message: 'Você excedeu o número de tentativas de login. Entre em contato com o administrador.'};
-            }
-            if (dbemail.length > 0 && dbemail[0].active == 1) {
-                const dbpassword = dbemail[0].password;
-                const comparePassword = await util.comparePassword(password, dbpassword);
+            } */
+
+           
+            if (dbemail.length > 0 && dbemail[0].ativo == 1) {
+
+                const dbpassword = dbemail[0].senha;
+                const comparePassword = await util.comparePassword(senha, dbpassword);
                 if(comparePassword === true){   
                     const idToken = uuidv4();
-                    const userId = {id: dbemail[0].id, code: idToken, role: dbemail[0].role};
+                    const userId = {id: dbemail[0].id, code: idToken};
                     const accessToken = await util.generateToken(userId, process.env.ACCESS_TOKEN_SECRET, process.env.ACCESS_TOKEN_EXPIRES_IN ?? '15m');
                     const refreshToken = await util.generateToken(userId, process.env.REFRESH_TOKEN_SECRET, process.env.REFRESH_TOKEN_EXPIRES_IN ?? '7d');
-                    const user = await knex('users').where('active', 1).where('id', dbemail[0].id).update({wrongpassword: 0});         
-                    return ({status: true, message: {id: dbemail[0].id, name: dbemail[0].nome, accessToken: accessToken, refreshToken: refreshToken}});
+                   // const user = await knex('users').where('active', 1).where('id', dbemail[0].id).update({wrongpassword: 0});         
+                    return ({status: true, message: {id: dbemail[0].id, nome: dbemail[0].nome, accessToken: accessToken, refreshToken: refreshToken}});
                 }
                 else{
-                    const qualidadedesenhaerrada = dbemail[0].wrongpassword;
-                    const user = await knex('users').where('active', 1).where('id', dbemail[0].id).update({wrongpassword: qualidadedesenhaerrada + 1});
+                   /*  const qualidadedesenhaerrada = dbemail[0].wrongpassword;
+                    const user = await knex('users').where('active', 1).where('id', dbemail[0].id).update({wrongpassword: qualidadedesenhaerrada + 1}); */
                     return {status: false, message: 'E-mail e/ou senha estão incorretos.'};
                 }
             } else{

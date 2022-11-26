@@ -2,8 +2,8 @@ const Validator = require('../../repositories/http/validator')
 
 const schema = {
     auth: Validator.object().shape({
-        cpf: Validator.string().required(),
-        password: Validator.string().required().min(8)
+        email: Validator.string().email().required(),
+        senha: Validator.string().required().min(8)
     }),
     email: Validator.object().shape({
         email: Validator.string().required().email()

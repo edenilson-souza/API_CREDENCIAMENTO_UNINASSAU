@@ -20,18 +20,15 @@ module.exports = {
         } */
         const data = req.body;
 
-        const cpf = data.cpf.replace(/[\D]/g, '');
-        const password = data.password.replace(/\s/g, '');
+        const senha = data.senha.replace(/\s/g, '');
 
-        console.log(cpf)
-
-        AuthValidator.auth.validate({ cpf, password}).then(async function (){
+        AuthValidator.auth.validate({ ...data, senha}).then(async function (){
             try
             {
                 const authModel = await model.Auth;
-                const user = await authModel.authenticate({...data, password});
+                const user = await authModel.authenticate({...data, senha});
                 if(user.status){
-                    res.json({status: true, message: 'Bem-vindo de volta!', data:{ nome: user.message.name, accessToken: user.message.accessToken, refreshToken: user.message.refreshToken}});
+                    res.json({status: true, message: 'Bem-vindo de volta!', data:{ ...user.message, accessToken: user.message.accessToken, refreshToken: user.message.refreshToken}});
                 }else{
                     res.status(403).json({status: false, message: user.message}) ;
                 }
