@@ -24,13 +24,13 @@ const swaggerFile = require('../swagger_output.json') */
 
 async function start() {
 
-    app.use(function(req, res, next) {
+    /* app.use(function(req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
         res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         next();
     });
-
+ */
     app.use(bodyParser.urlencoded({limit:'50mb', extended: false }));
     app.use(bodyParser.json({limit: 10 * 1024 * 1024}));
     app.use(bodyParser.raw({limit: 10 * 1024 * 1024}));
