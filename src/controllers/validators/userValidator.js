@@ -6,8 +6,7 @@ const schema = {
         cpf: Validator.string().required().min(11).max(11),
         email: Validator.string().required().email(),
         telefone: Validator.string().required().min(11).max(11),
-        senha: Validator.string().required().min(8),
-        id_tipo_usuario: Validator.string().required()
+        senha: Validator.string().required().min(8)
     }),
     id: Validator.object().shape({
         id: Validator.string().required().min(36).max(36),

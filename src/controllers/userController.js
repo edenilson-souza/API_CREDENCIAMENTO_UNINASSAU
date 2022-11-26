@@ -8,7 +8,13 @@ module.exports = {
     async create(req, res){
         const data = req.body;
 
-        UserValidator.create.validate({...data}).then(async function () {
+        function apenasNumeros(texto) {
+            return texto.replace(/\D/g, '');
+        }
+
+        const cpf = apenasNumeros(data.cpf)
+
+        UserValidator.create.validate({...data, cpf}).then(async function () {
             try {
                 const userModel = await model.User;
                 const userRegistered = await userModel.create({...data});
