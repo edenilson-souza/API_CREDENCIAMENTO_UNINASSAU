@@ -12,15 +12,15 @@ const morgan = require('morgan');
 const knex = require('./config/database');
 const model = require('./model');
 
-const path = require('path');
-const rfs = require('rotating-file-stream');
+/* const path = require('path');
+const rfs = require('rotating-file-stream'); */
 const fileupload = require('express-fileupload');
 
 const timexe = require( 'timexe' );
 const signale = require('signale');
 
-const swaggerUi = require('swagger-ui-express')
-const swaggerFile = require('../swagger_output.json')
+/* const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('../swagger_output.json') */
 
 async function start() {
 
@@ -55,7 +55,7 @@ async function start() {
 
 
     //HOME PAGE
-    app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerFile))
+    //app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerFile))
    
 
     //SERVER LISTEN
