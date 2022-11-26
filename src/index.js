@@ -19,8 +19,8 @@ const fileupload = require('express-fileupload');
 const timexe = require( 'timexe' );
 const signale = require('signale');
 
-const swaggerUi = require('swagger-ui-express')
-const swaggerFile = require('../swagger_output.json')
+/* const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('../swagger_output.json') */
 
 async function start() {
 
@@ -36,18 +36,17 @@ async function start() {
     app.use(bodyParser.raw({limit: 10 * 1024 * 1024}));
 
     
-     
     app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
     app.use(helmet());
 
     app.use(express.json());
     
     //upload de arquivos
-    /* app.use(fileupload({
+    app.use(fileupload({
         useTempFiles : true,
         tempFileDir : '/tmp/',
         limits: { fileSize: 50 * 1024 * 1024 },
-    })); */
+    }));
 
     //SAVE LOGGING TO FILE
     //var accessLogStream = rfs.createStream("access.log", {size: "10M", interval: "1d", compress: "gzip", path: path.join(__dirname, '../log')});
@@ -77,12 +76,12 @@ async function start() {
 
 
     //REMOVE INVALID TOKENS
-    timexe ("* * w1-7 / 6" ,  function ( ) {  
+    /* timexe ("* * w1-7 / 6" ,  function ( ) {  
         const validade = new Date(Date.now() - (1000* 60 * 20)); //Deletar todos os tokens que tiverem mais de 20 minutos que foram inseridos
         knex('tokens').where('created_at', '<', validade).del();
         // * * * 0-23 / 1                   //A CADA 1 minuto
         //* * w1-7 / 6                      //A CADA 6 horas
-    });
+    }); */
 
 }
 
