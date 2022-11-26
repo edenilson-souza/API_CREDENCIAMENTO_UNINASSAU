@@ -19,8 +19,8 @@ const fileupload = require('express-fileupload');
 const timexe = require( 'timexe' );
 const signale = require('signale');
 
-const swaggerUi = require('swagger-ui-express')
-const swaggerFile = require('../swagger_output.json')
+/* const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('../swagger_output.json') */
 
 async function start() {
 
@@ -65,8 +65,8 @@ async function start() {
     app.use(`/api/${APP_VERSION}`, routes);
 
 
-    //HOME PAGE
-    app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerFile))
+   /*  //HOME PAGE
+    app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerFile)) */
    
 
     //SERVER LISTEN
